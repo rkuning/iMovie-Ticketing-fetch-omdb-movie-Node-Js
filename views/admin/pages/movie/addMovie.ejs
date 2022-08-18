@@ -1,0 +1,102 @@
+<div class="container-fluid">
+  <% if (msg !== '') {%>
+  < class="row">
+    <div class="col-0"></div>
+    < class="alert alert-success text-center col-12" role="alert"><%= msg %></div>
+    <div class="col-0"></div>
+  </div>
+  <% } %>
+
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-12 border bg-light rounded">
+      <br />
+      <h5 align="center" class="table-striped navbartext">Add Movie</h5>
+      <br />
+      <br />
+      <form class="row g-3" method="post" action="/api/movies/add/">
+        <div class="col-2">
+          <label for="inputPrice" class="form-label">Price</label>
+          <div class="input-group col-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">Rp</span>
+            </div>
+            <input type="number" class="form-control" id="inputPrice" name="price" value="" required aria-label="Username" aria-describedby="basic-addon1">
+          </div>
+        </div>
+        <div class="col-2">
+          <label for="inputStatus" class="form-label">Status</label>
+          <select class="form-control" id="inputStatus" name="status" required>
+            <option selected value="">Choose status...</option>
+            <option value="ongoing">On Going</option>
+            <option value="comingsoon">Coming Soon</option>
+            <option value="expired">Expired</option>
+          </select>
+        </div>
+        <div class="col-2">
+          <label for="inputimdb" class="form-label">Imdb ID</label>
+          <input type="text" readonly class="form-control inputImdb" id="inputimdb" name="imdbId" required />
+        </div>
+        <div class="col-6">
+          <label for="inputStatus" class="form-label">Search</label>
+          <div class="input-group col-4">
+            <input
+              type="text"
+              class="form-control inputKey"
+              placeholder="Search movie..."
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary caributton" type="button">Search</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- movie here -->
+        <div class="col-12 my-2">
+          <button type="submit" class="btn btn-outline-primary">Submit</button>
+          <a href="/api/movies" class="btn btn-outline-primary">Cancel</a>
+        </div>
+      </form>
+      <div class="row movie-container">
+        <br />
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+
+
+
+  <script>
+    const btnSearch = document.querySelector(".caributton");
+    btnSearch.addEventListener("click", async function () {
+      const inputKey = document.querySelector(".inputKey");
+      await fetch(`http://www.omdbapi.com/?apikey=d4c2bbe5&s=${inputKey.value}`)
+      .then((result) => result.json())
+      .then((result) => {
+        const movies = result.Search;
+        let cards = "";
+        movies.forEach((m) => {
+            cards += `<div class="col-md-1 my-3">
+                    <div class="card text-center">
+                    <img class="card-img-top" src="${m.Poster}" />
+                    <div class="row card-body">
+                    <h5 class="card-title">${m.Title}</h5>
+                          <h6 class="card-text text-muted">${m.Year}</h6>
+                        </div>
+                      </div>
+                      <div class="row text-center">
+                        <div class="col-12 my-2">
+                          <a id="${m.imdbID}" onclick="document.getElementById('inputimdb').value = this.id" class="btn btn-outline-primary addImdbId">Add</a>
+                        </div>
+                      </div>
+                    </div>
+          `;
+          });
+          const movieContainer = document.querySelector(".movie-container");
+          movieContainer.innerHTML = cards;
+        });
+    });
+
+  </script>

@@ -1,0 +1,78 @@
+<div class="container-fluid">
+  <% if (msg !== '') {%>
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="alert alert-success text-center col-8" role="alert"><%= msg %></div>
+    <div class="col-2"></div>
+  </div>
+  <% } %>
+
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-2">
+      <div class="card text-center cardsize">
+        <img class="card-img-top gambar" src="<%= showMovie[0].poster %> " />
+        <div class="row card-body">
+          <h5 class="card-title"><%= showMovie[0].title %></h5>
+          <h6 class="card-text text-muted"><%= showMovie[0].year %></h6>
+          <h6 class="card-text text-muted"><%= showMovie[0].genre %></h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-12 border bg-light rounded">
+            <br />
+            <h5 align="center" class="table-striped navbartext">UPDATE MOVIE</h5>
+            <br />
+            <br />
+            <form class="row g-3" method="post" action="/api/movies/update/<%= showMovie[0].id %> ">
+              <div class="col-6">
+                <label for="inputPrice" class="form-label">Price</label>
+                <div class="input-group col-2">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Rp</span>
+                  </div>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="inputPrice"
+                    name="price"
+                    value="<%= showMovie[0].price %>"
+                    required
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                  />
+                </div>
+              </div>
+              <div class="col-6">
+                <label for="inputStatus" class="form-label">Status</label>
+                <select class="form-control" id="inputStatus" name="status" required>
+                  <% if (showMovie[0].status=== 'ongoing') { %>
+                  <option selected value="ongoing">On Going</option>
+                  <% } else if (showMovie[0].status === 'comingsoon') { %>
+                  <option selected value="comingsoon">Coming Soon</option>
+                  <% } else if (showMovie[0].status === 'expired') { %>
+                  <option selected value="expired">Expired</option>
+                  <% } %>
+                  <option value="ongoing">On Going</option>
+                  <option value="comingsoon">Coming Soon</option>
+                  <option value="expired">Expired</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-outline-primary">Submit</button>
+                <a href="/api/movies" class="btn btn-outline-primary">Cancel</a>
+              </div>
+            </form>
+            <br />
+          </div>
+        </div>
+        <div class="col"></div>
+      </div>
+    </div>
+    <div class="col"></div>
+  </div>
+</div>

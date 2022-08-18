@@ -1,0 +1,188 @@
+<div class="container-fluid">
+  <% if (msg !== '') {%>
+  <div class="row">
+    <div class="col-0"></div>
+    <div class="alert alert-success text-center col-12" role="alert"><%= msg %></div>
+    <div class="col-0"></div>
+  </div>
+  <% } %>
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-12">
+      <div class="row">
+        <!-- skat -->
+
+        <div class="col-md-2 my-3">
+          <div class="card text-center cardsize navbar-dark bg-primary">
+            <br />
+            <h5 class="card-title text-light navbartext">Rp <%= showMovies[0].price %>,-</h5>
+            <br />
+            <img class="card-img-top gambar" src="<%= showMovies[0].poster %> " />
+            <div class="row card-body">
+              <h5 class="card-title text-light"><%= showMovies[0].title %></h5>
+              <h6 class="card-text text-light"><%= showMovies[0].year %></h6>
+              <h6 class="card-text text-light"><%= showMovies[0].genre %></h6>
+            </div>
+          </div>
+        </div>
+        <!-- skat -->
+        <div class="col-md-3 my-3">
+              <div class="row">
+                    <div class="col-4">
+                          <button active
+                          id="<%= tampilTanggal %>"
+                          class="btn btn-outline-primary"
+                          onclick="document.getElementById('inputDate').value = this.id"
+                          >
+                          <h6><%= tampilTanggal %></h6>
+                          <h4>Today</h4>
+                        </button>
+                  </div>
+                  <div class="col-4">
+                        <button
+                  id="<%= tampilTanggal2 %>"
+                  class="btn btn-outline-primary"
+                  onclick="document.getElementById('inputDate').value = this.id"
+                  >
+                  <h6><%= tampilTanggal2 %></h6>
+                  <h4><%= date2Text %></h4>
+            </button>
+      </div>
+      <div class="col-4">
+                    <form action="/users/ticket/<%= showMovies[0].imdbId %> " method="post">
+                <input
+                  style="text-align: center"
+                  required
+                  type="text"
+                  class="form-control"
+                  id="inputDate"
+                  name="date"
+                  readonly
+                />
+                <input
+                  style="text-align: center"
+                  required
+                  type="text"
+                  class="form-control"
+                  id="inputSeatId"
+                  name="seatId"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <div class="col-12 my-3">
+              <input
+                type="text"
+                hidden
+                required
+                class="form-control"
+                id="inputMovieId"
+                name="movieId"
+                readonly
+                value="<%= showMovies[0].id %> "
+              />
+            </div>
+            <div class="col-12 my-3">
+              <div class="input-group my-1 mb-3">
+                <label class="input-group-text" for="inputStudio">Studio</label>
+                <select class="form-select" id="inputStudio" name="studioId" required>
+                  <option value="" selected>Choose studio...</option>
+                  <% studios.forEach(s => { %>
+                  <option value="<%= s.id %> "><%= s.name %></option>
+                  <% }) %>
+                </select>
+              </div>
+            </div>
+            <div class="col-12 my-3">
+              <div class="input-group my-1 mb-3">
+                <label class="input-group-text" for="inputScheduleId">Schedule</label>
+                <select class="form-select" id="inputScheduleId" name="scheduleId" required>
+                  <option value="" selected>Choose schedule...</option>
+                  <% schedules.forEach(sche => { %>
+                  <option value="<%= sche.id %> "><%= sche.time %></option>
+                  <% }) %>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <button type="submit" class="btn btn-outline-primary">Buy</button>
+                <a href="/users" class="btn btn-outline-primary">Cancel</a>
+              </div>
+            </form>
+              <div class="col-6" style="text-align: right">
+                <button class="btn btn-outline-primary cariSeat">Search Seat</button>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-7 my-3">
+          <hr />
+          <h2 align="center">MOVIE SCREEN</h2>
+          <hr />
+          <div class="row isiSeat"></div>
+        </div>
+      </div>
+      <br />
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
+
+<script>
+  const btnSearch = document.querySelector(".cariSeat");
+  btnSearch.addEventListener("click", async function () {
+    let studioId = document.getElementById("inputStudio").value;
+    let scheduleId = document.getElementById("inputScheduleId").value;
+    let date = document.getElementById("inputDate").value;
+    let movieId = document.getElementById("inputMovieId").value;
+    const isiSeat = document.querySelector(".isiSeat");
+
+    let newSeat = [];
+    let pageSeat = ``;
+
+    await fetch("http://localhost:3000/users/getDataFromDb")
+      .then((response) => response.json())
+      .then((data) => {
+        let { seats, tickets } = data;
+
+        tickets.forEach((t) => {
+          if (+t.scheduleId === +scheduleId && +t.studioId === +studioId && t.date === date && +t.movieId === +movieId) {
+            seatId = t.seatId;
+            newSeat.push({ id: seatId, no_seat: `BOOKED` });
+          }
+        });
+
+        let showSeats = seats.map((se) => {
+          for (let i in newSeat) {
+            if (+se.id === +newSeat[i].id) {
+              se.no_seat = `BOOKED`;
+            }
+          }
+          return se;
+        });
+
+        showSeats.forEach((sea) => {
+          if (sea.no_seat === "BOOKED") {
+            pageSeat += `<div class="col-md-2 my-3">
+                              <div class="card text-center">
+                                    <div class="card-body">
+                                    <button class="btn btn-primary btn-lg btn-block " disabled>${sea.no_seat}</button>
+                                    </div>
+                              </div>
+                              </div>`;
+          } else {
+            pageSeat += `<div class="col-md-2 my-3">
+                              <div class="card text-center">
+                                    <div class="card-body">
+                                    <button id="${sea.id}" class="btn btn-primary btn-lg btn-block " onclick="document.getElementById('inputSeatId').value = this.id">${sea.no_seat}</button>
+                                    </div>
+                              </div>
+                              </div>`;
+          }
+        });
+
+        isiSeat.innerHTML = pageSeat;
+      });
+  });
+</script>

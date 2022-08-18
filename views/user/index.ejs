@@ -1,0 +1,116 @@
+<div class="container-fluid">
+  <% if (msg !== '') {%>
+  <div class="row">
+    <div class="col-0"></div>
+    <div class="alert alert-success text-center col-12" role="alert"><%= msg %></div>
+    <div class="col-0"></div>
+  </div>
+  <% } %>
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-12">
+      <div class="row">
+        <!-- skat -->
+        <% showMovies.forEach(s => { %> <% if (s.status !== 'expired') { %>
+
+        <div class="col-md-2 my-3">
+          <div class="card text-center cardsize">
+            <% if (s.status === 'ongoing') { %>
+            <br />
+            <h5 class="card-title">ON GOING</h5>
+            <br />
+            <% } else if (s.status === 'comingsoon') { %>
+            <br />
+            <h5 class="card-title">COMING SOON</h5>
+            <br />
+            <%} %>
+
+            <img class="card-img-top gambar" src="<%= s.poster %> " />
+            <div class="row card-body">
+              <h5 class="card-title">
+                <a data-id="<%= s.imdbId %> " data-bs-toggle="modal" data-bs-target="#detail" class="normallink modal-detail"
+                  ><%= s.title %></a
+                >
+              </h5>
+              <h6 class="card-text text-muted"><%= s.year %></h6>
+              <h6 class="card-text text-muted"><%= s.genre %></h6>
+            </div>
+          </div>
+          <% if (s.status === 'ongoing') { %>
+          <div class="row text-center">
+            <div class="col-12 my-2">
+              <a href="/users/ticket/<%= s.imdbId %>" class="btn btn-outline-primary">BUY TICKET</a>
+            </div>
+          </div>
+          <% } %>
+        </div>
+        <% } %> <% }) %>
+        <!-- skat -->
+      </div>
+      <br />
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
+
+<!-- modal -->
+<!-- data-bs-toggle="modal" data-bs-target="#detail" -->
+<div class="modal fade" id="detail" tabindex="-1" aria-labelledby="detailLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title navbartext text-center detailLabel" id="detailLabel">Detail Movie</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const btnModalDetail = document.querySelectorAll(".modal-detail");
+  btnModalDetail.forEach((btn) => {
+    btn.addEventListener("click", async function () {
+      const imdbId = this.dataset.id;
+      await fetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=d4c2bbe5`)
+        .then((response) => response.json())
+        .then((m) => {
+          let detailMovie = ` <div class="row">
+                                  <div class="col-6">
+                                  <div class="card text-center cardsize">
+                                        <img class="card-img-top gambarDetail" src="${m.Poster}" />
+                                        <div class="row card-body">
+                                        <h4 class="card-title">${m.Title}</h4>
+                                        </div>
+                                  </div>
+                                  </div>
+                                  <div class="col-6">
+                                  <div class="container-fluid">
+                                        <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col-12">
+                                              <div class="col-12">
+                                              <h6>Year : ${m.Year}</h6>
+                                              <h6>Released : ${m.Released}</h6>
+                                              <h6>Genre : ${m.Genre}</h6>
+                                              <h6>Director : ${m.Director}</h6>
+                                              <h6>Writer : ${m.Writer}</h6>
+                                              <h6>Actors : ${m.Actors}</h6>
+                                              <br />
+                                              <h6>Plot : ${m.Plot}</h6>
+                                              </div>
+                                        <br />
+                                        </div>
+                                        </div>
+                                        <div class="col"></div>
+                                  </div>
+                                  </div>
+                                  </div>`;
+          const modalBody = document.querySelector(".modal-body");
+          modalBody.innerHTML = detailMovie;
+          const titleModal = document.getElementById("detailLabel");
+          titleModal.innerHTML = m.Title;
+        });
+    });
+  });
+</script>

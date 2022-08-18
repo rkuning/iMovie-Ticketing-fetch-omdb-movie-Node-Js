@@ -1,0 +1,83 @@
+<div class="container-fluid">
+  <% if (msg !== '') {%>
+  <div class="row">
+    <div class="alert text-center alert-success col-12" role="alert"><%= msg %></div>
+  </div>
+  <% } %>
+
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-12 border bg-light rounded">
+      <br />
+      <h5 align="center" class="table-striped navbartext">USERS</h5>
+      <a href="/users" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addUser">Add User</a>
+      <br />
+      <br />
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr align="center">
+              <th width="5%">No</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Password</th>
+              <th>Level</th>
+              <th>Status</th>
+              <th width="10%">Action</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <% users.forEach((usr,index) => { %>
+            <tr align="center">
+              <td width="5%"><%= index + 1 %></td>
+              <td><%= usr.name %></td>
+              <td><%= usr.phone %></td>
+              <td><%= usr.password %></td>
+              <td><%= usr.level %></td>
+              <td><%= usr.status %></td>
+              <td width="10%">
+                <a href="/api/users/update/<%= usr.id %>" class="btn btn-outline-primary">Edit</a>
+                <a href="/api/users/<%= usr.id %>" class="btn btn-outline-primary">Delete</a>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <br />
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
+
+<!-- modal add users -->
+<div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="addUserLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title navbartext" id="addUserLabel">Add User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3" method="post" action="/api/users/">
+          <div class="col-12">
+            <label for="inputName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="inputName" name="name" required value="" />
+          </div>
+          <div class="col-12">
+            <label for="inputPhone" class="form-label">Phone</label>
+            <input type="number" class="form-control" id="inputPhone" name="phone" required value="" />
+          </div>
+          <div class="col-12">
+            <label for="inputPwd" class="form-label">Password</label>
+            <input type="password" class="form-control" id="inputPwd" name="password" required value="" />
+          </div>
+          <div class="col-4">
+            <button type="submit" class="btn btn-outline-primary">Submit</button>
+            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

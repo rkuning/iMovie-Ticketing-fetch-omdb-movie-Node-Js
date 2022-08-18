@@ -1,0 +1,64 @@
+<div class="container-fluid align-items-center justify-content-center">
+  <% if (msg !== '') {%>
+  <div class="row vertical-center-row">
+    <div class="col-2"></div>
+    <div class="alert alert-success text-center col-8" role="alert"><%= msg %></div>
+    <div class="col-2"></div>
+  </div>
+  <% } %>
+
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-8 border bg-light rounded">
+      <br />
+      <h5 align="center" class="table-striped navbartext">SEATS</h5>
+      <a href="/seats" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#add">Add Seat</a>
+      <br />
+      <br />
+      <!-- looping card here -->
+      <p>
+        <hr class="table-group-divider"/>
+         <center class="navbartext">MOVIE SCREEN</center>
+        <hr class="table-group-divider"/>
+     </p>
+      <div class="row">
+        <% seats.forEach(sea => { %>
+        <div class="col-md-2 my-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title navbartext"><%= sea.no_seat %></h5>
+              <a href="/api/seats/<%= sea.id %>" class="btn btn-outline-primary">Delete</a>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <br />
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
+
+<!-- modal add -->
+<div class="modal fade" id="add" tabindex="-1" aria-labelledby="addLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title navbartext" id="addLabel">Add Seat</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3" method="post" action="/api/seats/">
+          <div class="col-12">
+            <label for="inputNoseat" class="form-label">No Seat</label>
+            <input type="text" class="form-control" id="inputNoseat" name="no_seat" required value="" />
+          </div>
+          <div class="col-4">
+            <button type="submit" class="btn btn-outline-primary">Submit</button>
+            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<div class="container-fluid">
+  <% if (msg !== '') {%>
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="alert text-center alert-success col-8" role="alert"><%= msg %></div>
+    <div class="col-2"></div>
+  </div>
+
+  <% } %>
+
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-8 border bg-light rounded">
+      <br />
+      <h5 align="center" class="table-striped navbartext">VOUCHERS</h5>
+      <a href="/vouchers" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#add">Add Voucher</a>
+      <br />
+      <br />
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr align="center">
+              <th width="5%">No</th>
+              <th>Code</th>
+              <th>Balance</th>
+              <th>Is Valid</th>
+              <th width="10%">Action</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <% vouchers.forEach((vcr,index) => { %>
+            <tr align="center">
+              <td width="5%"><%= index + 1 %></td>
+              <td><%= vcr.code %></td>
+              <td><%= vcr.balance %></td>
+              <td><%= vcr.is_valid %></td>
+              <td width="10%">
+                <a href="/api/vouchers/<%= vcr.id %>" class="btn btn-outline-primary">Delete</a>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <br />
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
+
+<!-- modal add users -->
+<div class="modal fade" id="add" tabindex="-1" aria-labelledby="addLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title navbartext" id="addLabel">Add Voucher</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3" method="post" action="/api/vouchers/">
+          <div class="col-12">
+            <label for="inputBlc" class="form-label">Balance</label>
+            <select class="form-control" id="inputBlc" name="balance" required>
+              <option selected value="">Choose balance...</option>
+              <option value="25000">Rp 25.000,-</option>
+              <option value="50000">Rp 50.000,-</option>
+              <option value="100000">Rp 100.000,-</option>
+              <option value="150000">Rp 150.000,-</option>
+              <option value="200000">Rp 200.000,-</option>
+              <option value="250000">Rp 250.000,-</option>
+            </select>
+          </div>
+          <div class="col-4">
+            <button type="submit" class="btn btn-outline-primary">Submit</button>
+            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

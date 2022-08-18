@@ -1,0 +1,55 @@
+<div class="container-fluid align-items-center justify-content-center">
+  <% if (msg !== '') {%>
+  <div class="row vertical-center-row">
+    <div class="col-0"></div>
+    <div class="alert alert-success text-center col-12" role="alert"><%= msg %></div>
+    <div class="col-0"></div>
+  </div>
+  <% } %>
+
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-12 border bg-light rounded">
+      <br />
+      <h5 align="center" class="table-striped navbartext">MOVIES</h5>
+      <A href="/api/movies/add" class="btn btn-outline-primary">Add Movie</A>
+      <br />
+      <br />
+      <!-- looping card here -->
+      <div class="row">
+        <% showMovies.forEach(s => { %>
+        <div class="col-md-2 my-3">
+          <div class="card text-center cardsize">
+            <% if (s.status === 'ongoing') { %>
+            <br />
+            <h5 class="card-title">ON GOING</h5>
+            <br />
+            <% } else if (s.status === 'comingsoon') { %>
+            <br />
+            <h5 class="card-title">COMING SOON</h5>
+            <br />
+            <%} else { %>
+            <br />
+            <h5 class="card-title">EXPIRED</h5>
+            <br />
+            <%} %>
+            <img class="card-img-top gambar" src="<%= s.poster %> " />
+            <div class="row card-body">
+              <h5 class="card-title"><%= s.title %></h5>
+              <h6 class="card-text text-muted"><%= s.year %></h6>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div class="col-12 my-2">
+              <a href="/api/movies/update/<%= s.id %>" class="btn btn-outline-primary">Edit</a>
+              <a href="/api/movies/<%= s.id %>" class="btn btn-outline-primary">Delete</a>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <br />
+    </div>
+    <div class="col"></div>
+  </div>
+</div>

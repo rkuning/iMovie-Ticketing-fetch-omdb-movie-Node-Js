@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <% if (msg !== '') {%>
+  <div class="row">
+    <div class="col-4"></div>
+    <div class="alert alert-success col-4" role="alert"><%= msg %></div>
+    <div class="col-4"></div>
+  </div>
+  <% } %>
+
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-4 border bg-light rounded">
+      <br />
+      <div>
+        <h6 align="center">
+          <i class="fa-solid fa-user-ninja text-center fonticon"></i>
+        </h6>
+      </div>
+      <br />
+      <h5 align="center" class="table-striped navbartext">USER PROFIL</h5>
+      <br />
+      <div class="col-12">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-inputName"
+              ><i class="fa-solid fa-user" style="font-size: 20px"></i
+            ></span>
+          </div>
+          <input
+            type="text"
+            id="inputName"
+            name="name"
+            readonly
+            value="<%= user.name %> "
+            class="form-control"
+            placeholder="Full Name"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+          />
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-phone" style="font-size: 20px"></i></span>
+          </div>
+          <input
+            type="text"
+            id="inputPhone"
+            name="phone"
+            readonly
+            value="<%= user.phone %>"
+            class="form-control"
+            placeholder="Phone Number"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+          />
+        </div>
+      </div>
+      <br />
+    </div>
+    <div class="col"></div>
+  </div>
+</div>

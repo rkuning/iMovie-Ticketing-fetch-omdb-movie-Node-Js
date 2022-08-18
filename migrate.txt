@@ -1,0 +1,23 @@
+npx sequelize-cli model:generate --name user --attributes name:string,phone:integer,level:string,status:string,password:string ok
+
+npx sequelize-cli model:generate --name patty --attributes userId:integer,balance:integer ok
+
+npx sequelize-cli model:generate --name seat --attributes no_seat:string ok
+
+npx sequelize-cli model:generate --name schedule --attributes time:string ok
+
+npx sequelize-cli model:generate --name studio --attributes name:string ok
+
+npx sequelize-cli model:generate --name voucher --attributes code:string,balance:integer,is_valid:boolean
+
+npx sequelize-cli model:generate --name movie --attributes imdbId:string,price:integer,status:string ok
+
+npx sequelize-cli model:generate --name transaction --attributes userId:integer,date:date,scheduleId:integer,studioId:integer,movieId:integer,seatId:integer
+
+
+hooks: {
+        beforeCreate: (user, options) => {
+          user.password = encryptPw(user.password);
+          user.level = "user";
+        },
+      },

@@ -1,0 +1,74 @@
+<div class="container-fluid align-items-center justify-content-center">
+  <% if (msg !== '') {%>
+  <div class="row vertical-center-row">
+    <div class="col-3"></div>
+    <div class="alert alert-success text-center col-6" role="alert"><%= msg %></div>
+    <div class="col-3"></div>
+  </div>
+  <% } %>
+
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-6 border bg-light rounded">
+      <br />
+      <h5 align="center" class="table-striped navbartext">SCHEDULES</h5>
+      <a href="/schedules" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#add">Add Schedule</a>
+      <br />
+      <br />
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr align="center">
+              <th width="5%">No</th>
+              <th>Time Schedules</th>
+              <th width="20%">Action</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <% schedules.forEach((s,index) => { %>
+            <tr align="center">
+              <td width="5%"><%= index + 1 %></td>
+              <td><%= s.time %></td>
+              <td width="20%">
+                <a href="/api/schedules/<%= s.id %>" class="btn btn-outline-primary">Delete</a>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <br />
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
+
+<!-- modal add -->
+<div class="modal fade" id="add" tabindex="-1" aria-labelledby="addLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title navbartext" id="addLabel">Add Schedule</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3" method="post" action="/api/schedules/">
+          <div class="col-12">
+            <label for="inputTime" class="form-label">Time Schedule</label>
+            <select class="form-control" id="inputTime" name="time" required>
+              <option value="" selected>Choose time...</option>
+              <option value="13:20">13:30</option>
+              <option value="15:55">15:55</option>
+              <option value="18:30">18:30</option>
+              <option value="21:05">21:05</option>
+            </select>
+          </div>
+          <div class="col-4">
+            <button type="submit" class="btn btn-outline-primary">Submit</button>
+            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

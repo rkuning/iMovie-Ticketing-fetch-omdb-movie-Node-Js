@@ -1,0 +1,88 @@
+<div class="container-fluid">
+  <% if (msg !== '') {%>
+  <div class="row">
+    <div class="col-4"></div>
+    <div class="alert alert-success col-4" role="alert"><%= msg %></div>
+    <div class="col-4"></div>
+  </div>
+  <% } %>
+
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-4 border bg-light rounded">
+      <br />
+      <div>
+        <h6 align="center">
+          <i class="fa-solid fa-user-ninja text-center fonticon"></i>
+        </h6>
+      </div>
+      <br />
+      <h5 align="center" class="table-striped navbartext">Register</h5>
+      <br />
+      <form class="row g-3" method="post" action="/register">
+        <div class="col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-inputName"
+                ><i class="fa-solid fa-user" style="font-size: 20px"></i
+              ></span>
+            </div>
+            <input
+              type="text"
+              id="inputName"
+              name="name"
+              required
+              class="form-control"
+              placeholder="Full Name"
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+            />
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"
+                ><i class="fa-solid fa-phone" style="font-size: 20px"></i
+              ></span>
+            </div>
+            <input
+              type="number"
+              id="inputPhone"
+              name="phone"
+              required
+              class="form-control"
+              placeholder="Phone Number"
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+            />
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-key" style="font-size: 20px"></i></span>
+            </div>
+            <input
+              type="password"
+              id="inputPwd"
+              name="password"
+              required
+              class="form-control"
+              placeholder="Password"
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+            />
+          </div>
+        </div>
+        <div class="col-12 d-grid gap-2">
+          <button type="submit" class="btn btn-outline-primary navbartext">Register</button>
+        </div>
+      </form>
+      <br />
+      <h6>Already have an account? <a href="/login">SIGN IN</a></h6>
+      <br />
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
