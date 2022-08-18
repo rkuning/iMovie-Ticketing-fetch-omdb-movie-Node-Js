@@ -72,7 +72,7 @@
     const btnSearch = document.querySelector(".caributton");
     btnSearch.addEventListener("click", async function () {
       const inputKey = document.querySelector(".inputKey");
-      await fetch(`http://www.omdbapi.com/?apikey=d4c2bbe5&s=${inputKey.value}`)
+      await fetch(`http://www.omdbapi.com/?apikey=APIKEY&s=${inputKey.value}`)
       .then((result) => result.json())
       .then((result) => {
         const movies = result.Search;

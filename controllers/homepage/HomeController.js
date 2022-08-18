@@ -6,7 +6,7 @@ class HomeController {
       let showMovies = [];
       let movies = await movie.findAll();
       for (let m in movies) {
-        await fetch(`http://www.omdbapi.com/?i=${movies[m].imdbId}&apikey=d4c2bbe5`)
+        await fetch(`http://www.omdbapi.com/?i=${movies[m].imdbId}&apikey=APIKEY`)
           .then((response) => response.json())
           .then((resp) => {
             const { Title, Year, Poster, Genre } = resp;

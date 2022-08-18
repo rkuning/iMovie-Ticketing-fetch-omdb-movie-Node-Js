@@ -14,7 +14,7 @@ class TicketController {
       let studios = await studio.findAll();
       let schedules = await schedule.findAll();
       let datMovie = await movie.findOne({ where: { imdbId } });
-      await fetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=d4c2bbe5`)
+      await fetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=APIKEY`)
         .then((response) => response.json())
         .then((resp) => {
           const { Title, Year, Poster, Genre } = resp;
@@ -63,7 +63,7 @@ class TicketController {
       let datTicket = await ticket.findAll({ include: [schedule, studio, movie, seat], where: { userId } });
       let idTicket = await ticket.findAll({ attributes: ["id"] }, { where: { userId } });
       for (let i in datTicket) {
-        await fetch(`http://www.omdbapi.com/?i=${datTicket[i].movie.imdbId}&apikey=d4c2bbe5`)
+        await fetch(`http://www.omdbapi.com/?i=${datTicket[i].movie.imdbId}&apikey=APIKEY`)
           .then((response) => response.json())
           .then((result) => {
             detailTickets.push({
@@ -98,7 +98,7 @@ class TicketController {
       let idTicket = await ticket.findAll({ attributes: ["id"] }, { where: { userId } });
       let { balance } = await patty.findOne({ where: { userId } });
       for (let i in datTicket) {
-        await fetch(`http://www.omdbapi.com/?i=${datTicket[i].movie.imdbId}&apikey=d4c2bbe5`)
+        await fetch(`http://www.omdbapi.com/?i=${datTicket[i].movie.imdbId}&apikey=APIKEY`)
           .then((response) => response.json())
           .then((result) => {
             tickets.push({
@@ -144,7 +144,7 @@ class TicketController {
       let datMovie = await movie.findOne({ where: { imdbId } });
       let price = datMovie.price;
       let status = datMovie.status;
-      await fetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=d4c2bbe5`)
+      await fetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=APIKEY`)
         .then((response) => response.json())
         .then((resp) => {
           const { Title, Year, Poster, Genre } = resp;
