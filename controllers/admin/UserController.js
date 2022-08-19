@@ -6,12 +6,18 @@ class UserController {
     try {
       let users = await user.findAll();
 
-      res.status(200).render("./admin/pages/user/indexUsers", {
+      res.status(200).json({
         layout: "./admin/partials/main-layout",
         title: `iMovieXXI Administrator - Users`,
         msg: ``,
         users,
       });
+      // res.status(200).render("./admin/pages/user/indexUsers", {
+      //   layout: "./admin/partials/main-layout",
+      //   title: `iMovieXXI Administrator - Users`,
+      //   msg: ``,
+      //   users,
+      // });
     } catch (err) {
       res.status(500).json(err);
     }

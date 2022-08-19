@@ -65,7 +65,7 @@
   btnModalDetail.forEach((btn) => {
     btn.addEventListener("click", async function () {
       const imdbId = this.dataset.id;
-      await fetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=APIKEY`)
+      await fetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=d4c2bbe5`)
         .then((response) => response.json())
         .then((m) => {
           let detailMovie = ` <div class="row">

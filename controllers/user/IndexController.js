@@ -9,7 +9,7 @@ class IndexController {
       let showMovies = [];
       let movies = await movie.findAll();
       for (let m in movies) {
-        await fetch(`http://www.omdbapi.com/?i=${movies[m].imdbId}&apikey=APIKEY`)
+        await fetch(`http://www.omdbapi.com/?i=${movies[m].imdbId}&apikey=d4c2bbe5`)
           .then((response) => response.json())
           .then((resp) => {
             const { Title, Year, Poster, Genre } = resp;
@@ -32,6 +32,11 @@ class IndexController {
         user,
         balance,
       });
+      // res.status(200).json({
+      //   showMovies,
+      //   user,
+      //   balance,
+      // });
     } catch (err) {
       res.json(err);
     }
